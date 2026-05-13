@@ -18,16 +18,17 @@ text-align:center;
 padding-top:100px;
 ">
 
-<h1>CONZ BOT ONLINE</h1>
+<h1>CONZ AI ONLINE</h1>
 
-<p id="status">Bot server is running.</p>
+<p id="status">Awaiting command...</p>
 
-<input id="cmd" placeholder="Enter command"
+<input id="cmd" placeholder="Talk to AI"
 style="
 background:black;
 color:lime;
 border:1px solid lime;
 padding:10px;
+width:250px;
 ">
 
 <button onclick="sendCommand()"
@@ -61,9 +62,10 @@ async function sendCommand(){
 
     });
 
+    const data = await response.json();
+
     document.getElementById("status")
-    .innerText =
-    "Command sent: " + command;
+    .innerText = data.reply;
 
 }
 
@@ -78,22 +80,38 @@ async function sendCommand(){
 
 app.post("/incoming", (req, res) => {
 
-    const message = req.body.message;
+    const message =
+    req.body.message.toLowerCase();
 
-    console.log("Message:", message);
+    let reply = "Unknown command.";
 
-    if(message === "!ping"){
-        console.log("Pong command used");
+    if(message === "hello"){
+        reply = "Hello human.";
     }
 
-    if(message === "!hello"){
-        console.log("Hello command used");
+    else if(message === "how are you"){
+        reply = "Systems operating normally.";
     }
 
-    res.sendStatus(200);
+    else if(message === "who are you"){
+        reply = "I am Conz AI.";
+    }
+
+    else if(message.includes("hack")){
+        reply = "Access denied.";
+    }
+
+    else{
+        reply =
+        "You said: " + message;
+    }
+
+    res.json({
+        reply:reply
+    });
 
 });
 
 app.listen(3000, () => {
-    console.log("Server running on port 3000");
+    console.log("AI server running.");
 });
