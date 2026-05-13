@@ -6,7 +6,9 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
 
-    <html>
+    res.send(`
+
+<html>
 
 <body style="
 background:black;
@@ -69,6 +71,8 @@ async function sendCommand(){
 
 </body>
 </html>
+
+    `);
 
 });
 
