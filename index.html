@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conz Unbrick</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    height:100vh;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    color:white;
+}
+
+.bg{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:
+    radial-gradient(circle at top, rgba(255,0,0,0.2), transparent 40%),
+    radial-gradient(circle at bottom, rgba(255,0,0,0.15), transparent 40%);
+    animation:pulse 4s infinite alternate;
+}
+
+@keyframes pulse{
+    from{filter:blur(0px);}
+    to{filter:blur(6px);}
+}
+
+.container{
+    position:relative;
+    width:90%;
+    max-width:500px;
+    background:rgba(20,0,0,0.9);
+    border:2px solid red;
+    border-radius:25px;
+    padding:40px;
+    box-shadow:0 0 30px red;
+    text-align:center;
+}
+
+h1{
+    color:red;
+    font-size:3rem;
+    margin-bottom:20px;
+    text-shadow:0 0 20px red;
+}
+
+.desc{
+    font-size:1rem;
+    margin-bottom:30px;
+    animation:flash 3s infinite;
+}
+
+@keyframes flash{
+    0%{color:red;}
+    25%{color:orange;}
+    50%{color:white;}
+    75%{color:hotpink;}
+    100%{color:red;}
+}
+
+input{
+    width:100%;
+    padding:16px;
+    margin:12px 0;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    background:black;
+    color:red;
+    border:1px solid red;
+    font-size:1rem;
+    box-shadow:0 0 12px rgba(255,0,0,0.4);
+}
+
+input::placeholder{
+    color:#ff7b7b;
+}
+
+button{
+    width:100%;
+    padding:16px;
+    margin-top:20px;
+    border:none;
+    border-radius:14px;
+    background:red;
+    color:black;
+    font-size:1.2rem;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 0 20px red;
+}
+
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 35px red;
+}
+
+.notice{
+    margin-top:20px;
+    font-size:0.8rem;
+    color:#999;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<div class="container">
+
+<h1>Conz Unbrick</h1>
+
+<p class="desc">
+Welcome to Conz's Unbrick the best by far.
+</p>
+
+<input type="text" id="user" placeholder="Test Username">
+<input type="password" id="pass" placeholder="Test Passcode">
+
+<button onclick="saveData()">Unbrick Me</button>
+
+<p class="notice">
+SECURE AND ENCRYPTED
+</p>
+
+</div>
+
+<script>
+function saveData(){
+
+    let username = document.getElementById("user").value;
+    let password = document.getElementById("pass").value;
+
+    if(username === "" || password === ""){
+        alert("Fill in both fields.");
+        return;
+    }
+
+    let logins = JSON.parse(localStorage.getItem("demoLogins")) || [];
+
+    logins.push({
+        username: username,
+        password: password
+    });
+
+    localStorage.setItem("demoLogins", JSON.stringify(logins));
+
+    window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>
